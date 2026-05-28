@@ -36,8 +36,9 @@ jobs:
 
       - name: Show environment after
         run: |
-          echo "Contents of ansible-demo:"
-          ls -la $HOME/ansible-demo
+            echo "HOME is: $HOME"
+            echo "Searching for ansible-demo..."
+            find /home/runner -type d -name "ansible-demo" 2>/dev/null || true
 
       - name: Run playbook
         run: ansible-playbook playbooks/bootstrap.yml
