@@ -2,7 +2,9 @@ name: Ansible CI
 
 on:
   push:
-  workflow_dispatch:
+    branches:
+      - develop
+  #workflow_dispatch:
 
 jobs:
   run-ansible:
@@ -15,13 +17,27 @@ jobs:
       - name: Install Ansible
         run: |
           python -m pip install --upgrade pip
-          #pip install ansible ansible-lint
+          pip install ansible ansible-lint
+     
+      - name: Show environment before
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo ""
+          echo "Home directory:"
+          ls -la $HOME
 
       - name: Check Ansible version
         run: ansible --version
 
       - name: Lint playbook
         run: ansible-lint playbooks/bootstrap.yml
+
+      - name: Show environment after
+        run: |
+          echo "Contents of ansible-demo:"
+          ls -la $HOME/ansible-demo
 
       - name: Run playbook
         run: ansible-playbook playbooks/bootstrap.yml
