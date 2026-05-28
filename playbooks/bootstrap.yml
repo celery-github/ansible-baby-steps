@@ -1,0 +1,27 @@
+---
+- name: Local Bootstrap Demo
+  hosts: local
+
+  tasks:
+
+    - name: Create demo directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/ansible-demo"
+        state: directory
+        mode: "0755"
+
+    - name: Create sample configuration file
+      ansible.builtin.copy:
+        dest: "{{ ansible_env.HOME }}/ansible-demo/app.conf"
+        content: |
+          app_name=demo
+          environment=local
+          managed_by=ansible
+        mode: "0644"
+
+    - name: Create notes file
+      ansible.builtin.copy:
+        dest: "{{ ansible_env.HOME }}/ansible-demo/readme.txt"
+        content: |
+          This file was created by Ansible.
+        mode: "0644"
